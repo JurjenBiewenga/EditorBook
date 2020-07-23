@@ -3,7 +3,12 @@
 ## Serialization
 At the center of the editor sits seralization, without serialization the whole editor would fall flat. This is especially true for anything related to editor integration, thus very important for the aspiring editor programmer.
 
-Serialization links everything together, every value in the inspector, in your scene, or in the settings is serialized. This is done to prevent all values from resetting every time you close Unity, enter/exit playmode, or change your code. These events are what we call assembly reloads. During these assembly reloads Unity will unload all C# code (including large parts of the editor itself) and recompile and load the assemblies. After an assembly reload is completed Unity will restore all serialized data to their respective objects. Therefore if your data is not serialized during an assembly reload then it will all be lost.
+Serialization links everything together, every value in the inspector, in your scene, or in the settings is serialized to your disk. This is done to prevent all values from resetting during the following events:
+* Opening/closing Unity
+* Entering/exiting playmode
+* Importing any code
+
+ These events are what we call assembly reloads. During these assembly reloads Unity will unload all C# code (including large parts of the editor itself) and recompile and load the assemblies. After an assembly reload is completed Unity will restore all serialized data from disk to their respective objects. Therefore if your data is not serialized during an assembly reload then it will all be lost.
 
 The serialized state is initialized by the default values in your code, this is why when you later change the default value it is not updated in the inspector (you can manually update it by right clicking on the component and pressing reset). 
 
