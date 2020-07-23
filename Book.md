@@ -19,7 +19,15 @@ The recommended way to interact with the serialized state is by using something 
 
 By default all public fields are serialized if the type of the field supports serialization. Private fields however are not serialized unless you apply a `SerializeField` attribute to those fields. 
 
-All basic types support serialized however custom structs and classes need to have the `Serializable` attribute applied to the class or struct. This of course also requires fields in that class or struct to be public or have the `SerializeField` attribute applied to those fields.
+All serialized fields are serialized by value, this means that it is not possible to have multiple fields refer to the same value. The exception to this is types that derive from `UnityEngine.Object` or fields that have the `SerializedReference` attribute.
+
+All basic types support serialized however custom structs and classes are required to have the `Serializable` attribute applied to the class or struct. This of course also requires fields in that class or struct to be public or have the `SerializeField` attribute applied to those fields.
+
+There are more attributes that influence serialization, e.g. `NonSerialized` which makes any serialized field not serialized. This is useful for when you want public fields that should not be serialized. `HideInInspector` does not influence serialization but is useful to hide a serialized field.
+
+### SerializeReference
+
+`SerializeReference` is a new attribute (introduced in 2019.3) that lets you serialize non Unity objects by reference. This only works for the same `UnityEngine.Object`, e.g. 2 `MonoBehavior`s can't share references. Even with this big limitations it is still very useful for graph or tree like structures. `SerializeReference` is definitely worth looking into if you are planning on using these data structures.
 
 ## Interacting with the serialized state
 
@@ -42,5 +50,7 @@ If you've update the serialized state through some other means you can use the U
 There are few reasons to directly modify the object without going through `SerializedObject` however you might still find one. As previously mentioned you will have to manually support undo and multi object editing if those are wanted.
 
 If you've ran into one of these cases you can use `Undo.RecordObject` before modifying the object, this will apply the changes to the serialized state. If Undo is unwanted you can use `EditorUtility.SetDirty` or `EditorSceneManager.MarkSceneDirty` for changes in the scene. However these do not offer undo support.
+
+![serialization diagram example](Images/SerializedPropertyUndoDiagram.png)
 
 ## Extending serialization
