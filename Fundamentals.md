@@ -32,7 +32,7 @@ There are more attributes that influence serialization, e.g. `NonSerialized` whi
 
 ### SerializeReference
 
-`SerializeReference` is a new attribute (introduced in 2019.3) that lets you serialize non Unity objects by reference. This only works for the same `UnityEngine.Object`, e.g. 2 `MonoBehavior`s can't share references. Even with this big limitations it is still very useful for graph or tree like structures. `SerializeReference` is definitely worth looking into if you are planning on using these data structures.
+`SerializeReference` is a new attribute (introduced in 2019.3) that lets you serialize non Unity objects by reference and allows you to serialize polymorphic types, i.e. types that share a base class. This only works for the same `UnityEngine.Object`, i.e. 2 `MonoBehavior`s can't share references. Even with this big limitation it is still very useful for graph or tree like structures. `SerializeReference` is definitely worth looking into if you are planning on using these data structures.
 
 ## Interacting with the serialized state
 
