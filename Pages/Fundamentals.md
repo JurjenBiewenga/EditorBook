@@ -1,7 +1,7 @@
 # Fundamentals
 
 ## Serialization
-At the center of the editor sits seralization, without serialization the whole editor would fall flat. This is especially true for anything related to editor integration, therefore very important for the aspiring editor programmer.
+At the center of the editor sits serialization, without serialization the whole editor would fall flat. This is especially true for anything related to editor integration, therefore very important for the aspiring editor programmer.
 
 Serialization is the process of converting an instance of a class to a format (usually text based) that is more friendly to being saved, Unity uses either YAML or a Binary format. It is recommended to use YAML serialization as this is human readable and is better for source control. As you might expect there is also the process of turning a text based format back into a class, this is called deserialization.
 
