@@ -12,13 +12,17 @@ In most cases you won't have to mix these methods however it is useful to know a
 
 As previously mentioned, the automatic layout method tries to place the UI elements based on hints provided by the developer. This makes it easier to quickly create new UIs in a similar style in exchange for a little less control. It starts by placing controls in the top left corner.
 
-All automatically layouted controls are defined in the (Editor)GUILayout class, most general purpose controls are defined in GUILayout. Some have an equivalent in EditorGUILayout, these often have extra functionality specific to the editor.
+All automatically layouted controls are defined in the (Editor)GUILayout class, most general purpose controls are defined in GUILayout. Some have an equivalent in EditorGUILayout, these often have extra functionality specific to the editor. For example they respond correctly to actions such as select all, copy, paste, and they can also have an optional label in front.
 
 There are several ways to influence the placement of GUILayout controls, most often you'll be using Horizontal (`Begin/EndHorizontal` or `HorizontalScope`) and Vertical (`Begin/EndVertical` or `VerticalScope`) groups, these allow for most basic UIs. You can also pass `GUILayoutOption`s to most controls, these allow you to change that control specifically, it's a bit counter intuitive however these are also defined in `GUILayout` (e.g. `GUILayout.Width` or `GUILayout.Min/MaxWidth`). 
 
 Placing controls at either the right or bottom side can be done by using a layout group and the `GUILayout.FlexibleSpace` control, which will take up all leftover space.
 
 ### Manual / GUI
+
+As you might expect the manual layouting method requires you to manually define the location of the controls, this gives you a lot of control in exchange for a bit of extra work. Manual layouting also has higher performance than `GUILayout`, in my opinion it does not matter which you use for most editors. Keep in mind that you are forced to use manual layouting when creating `PropertyDrawer`s. 
+
+Similarly to the automatic layouting method there is also a `EditorGUI` class with editor specific controls. 
 
 ### Mixing manual and automatic modes
 

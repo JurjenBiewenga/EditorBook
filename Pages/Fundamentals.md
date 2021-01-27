@@ -1,7 +1,7 @@
 # Fundamentals
 
 ## Serialization
-At the center of the editor sits serialization, without serialization the whole editor would fall flat. This is especially true for anything related to editor integration, therefore very important for the aspiring editor programmer.
+As a large part of editor scripting revolves around saving and loading data, even if you might not realize it at first. Therefore it is very important to understand how Unity handles saving and loading or also known as serialization.~~~~
 
 Serialization is the process of converting an instance of a class to a format (usually text based) that is more friendly to being saved, Unity uses either YAML or a Binary format. It is recommended to use YAML serialization as this is human readable and is better for source control. As you might expect there is also the process of turning a text based format back into a class, this is called deserialization.
 
@@ -10,13 +10,13 @@ Serialization links everything together, every value in the inspector, in your s
 * Entering/exiting play-mode
 * Importing any code
 
- These events are what we call assembly reloads. During these assembly reloads Unity will unload all C# code (including large parts of the editor itself) and recompile and load the assemblies. After an assembly reload is completed Unity will restore (also known as deserialization) all serialized data from disk to their respective objects. Therefore if your data is not serialized during an assembly reload; it will all be lost.
+These events are what we call assembly reloads. During these assembly reloads Unity will unload all C# code (including large parts of the editor itself) and recompile and load the assemblies. After an assembly reload is completed Unity will restore (also known as deserialization) all serialized data from disk to their respective objects. Therefore if your data is not serialized during an assembly reload; it will all be lost.
+
+The serialized state is initialized and saved by the default values in your code, Unity from then on applies the serialized state on top of your default values. The recommended way to interact with the serialized state is by using `SerializedObject`s and SerializedProperties, in the next chapters we will discuss those further.
 
 ![serialization diagram example](../Images/SerializationDiagram.png)
 
-The serialized state is initialized by the default values in your code, this is why when you change the default value it is not updated in the inspector (you can manually update it by right clicking on the component and pressing reset). The recommended way to interact with the serialized state is by using SerializedObjects and SerializedProperties, in the next chapter we will discuss those further.
-
-To view this serialized state you can set your editor to use text serialization and open any `*.meta` or `*.asset` file to see what is being saved.
+To view this serialized state you can set the Unity editor to use text serialization and open any `*.meta` or `*.asset` file to see what is currently saved.
 
 ![text serialization example](../Images/TextSerialization.png)
 
@@ -24,11 +24,11 @@ To view this serialized state you can set your editor to use text serialization 
 
 By default all public fields are serialized if the type of the field supports serialization. Private fields however are not serialized unless you apply an `SerializeField` attribute to those fields. 
 
-In general all non `UnityEngine.Object` typed fields are serialized by value, this means that it is not possible to have multiple fields refer to the same value. Types derived from `UnityEngine.Object` are serialized by reference, fields with the `SerializeReference` attribute are also serialized by reference under certain conditions.
+In general all objects **not** deriving from `UnityEngine.Object` are serialized by value, this means that it is not possible to have multiple fields refer to the same object or value. Types derived from `UnityEngine.Object` are serialized by reference, fields with the `SerializeReference` attribute are also serialized by reference under certain conditions.
 
 All basic types support serialized however custom structs and classes are required to have the `Serializable` attribute applied to the class or struct. This of course also requires fields in that class or struct to be public or have the `SerializeField` attribute applied to those fields.
 
-There are other attributes that influence serialization, e.g. `NonSerialized` which makes any serialized field not serialized. This is useful for when you want public fields that should not be serialized. `HideInInspector` does not influence serialization but is useful to hide a serialized field.
+There are also other attributes that influence serialization, e.g. `NonSerialized` which makes any serialized field not serialized. This is useful for when you want public fields that should not be serialized but they should be accessible outside of the class. `HideInInspector` does not influence serialization but it is useful to hide a serialized field.
 
 ### SerializeReference
 
